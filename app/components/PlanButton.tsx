@@ -10,8 +10,16 @@ export default function PlanButton({ workoutId }: PlanButtonProps) {
   const [added, setAdded] = useState(false);
 
   function handleAdd() {
+    const savedPlan = localStorage.getItem("fitlog-plan");
+
+    const plan: number[] = savedPlan ? JSON.parse(savedPlan) : [];
+
+    if (!plan.includes(workoutId)) {
+      plan.push(workoutId);
+      localStorage.setItem("fitlog-plan", JSON.stringify(plan));
+    }
+
     setAdded(true);
-    console.log("Workout added:", workoutId);
   }
 
   return (
