@@ -33,7 +33,7 @@ export default function Hero() {
           <img
             src="/banner.png"
             alt="Workout"
-            className="h-[350px] w-full object-cover md:h-[500px]"
+            className="h-[350px] w-full object-contain md:h-[500px]"
           />
         </div>
 
