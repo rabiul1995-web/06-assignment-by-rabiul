@@ -11,6 +11,7 @@ type Workout = {
   image: string;
   muscleGroups: string[];
   equipment: string;
+  difficulty: string;
   duration: number;
   caloriesBurned: number;
   rating: number;
@@ -40,10 +41,7 @@ export default function Home() {
       <Hero />
 
       {/* Library */}
-      <section
-        id="library"
-        className="bg-zinc-950 px-6 py-20"
-      >
+      <section id="library" className="bg-zinc-950 px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="mb-10">
             <h2 className="text-4xl font-black md:text-5xl">
