@@ -20,6 +20,7 @@ type Workout = {
 export default function Home() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetch("https://api.abcz.workers.dev/api/fitlog")
@@ -30,6 +31,7 @@ export default function Home() {
       })
       .catch((error) => {
         console.error("Failed to fetch workouts:", error);
+        setError("Failed to load workouts. Please try again.");
         setLoading(false);
       });
   }, []);
@@ -60,8 +62,15 @@ export default function Home() {
             </div>
           )}
 
+          {/* Error */}
+          {error && (
+            <div className="rounded-lg border border-red-900 bg-red-950/30 p-6 text-center text-red-400">
+              {error}
+            </div>
+          )}
+
           {/* Workout Cards */}
-          {!loading && (
+          {!loading && !error && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {workouts.map((workout) => (
                 <WorkoutCard
