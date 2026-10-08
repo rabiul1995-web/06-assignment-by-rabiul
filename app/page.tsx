@@ -21,6 +21,7 @@ export default function Home() {
   const [workouts, setWorkouts] = useState<Workout[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [sortBy, setSortBy] = useState("duration");
 
   useEffect(() => {
     fetch("https://api.abcz.workers.dev/api/fitlog")
@@ -35,10 +36,24 @@ export default function Home() {
         setLoading(false);
       });
   }, []);
+  const sortedWorkouts = [...workouts].sort((a, b) => {
+    if (sortBy === "duration") {
+      return a.duration - b.duration;
+    }
 
+    if (sortBy === "calories") {
+      return a.caloriesBurned - b.caloriesBurned;
+    }
+
+    if (sortBy === "rating") {
+      return b.rating - a.rating;
+    }
+
+    return 0;
+  });
   return (
     <main className="min-h-screen bg-black text-white">
-      
+
       <Hero />
 
       {/* Library */}
@@ -52,6 +67,23 @@ export default function Home() {
             <p className="mt-3 text-zinc-400">
               Twelve lifts covering every major muscle group.
             </p>
+          </div>
+          <div className="mb-8 flex items-center justify-end">
+            <div className="relative">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="appearance-none rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 pr-10 text-sm font-semibold text-white outline-none transition focus:border-lime-400"
+              >
+                <option value="duration">Duration</option>
+                <option value="calories">Calories (Low → High)</option>
+                <option value="rating">Rating</option>
+              </select>
+
+              <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-zinc-400">
+                ▼
+              </span>
+            </div>
           </div>
 
           {/* Loading */}
@@ -71,7 +103,7 @@ export default function Home() {
           {/* Workout Cards */}
           {!loading && !error && (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {workouts.map((workout) => (
+              {sortedWorkouts.map((workout) => (
                 <WorkoutCard
                   key={workout.id}
                   workout={workout}
