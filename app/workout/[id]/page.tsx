@@ -1,3 +1,5 @@
+import WorkoutActions from "@/app/components/WorkoutActions";
+
 type Workout = {
           id: number;
           name: string;
@@ -104,6 +106,7 @@ export default async function WorkoutDetails({
                                                                                 ★ {workout.rating}
                                                                       </p>
                                                             </div>
+                                                            <WorkoutActions workout={workout} />
                                                   </div>
                                         </div>
                               </div>
