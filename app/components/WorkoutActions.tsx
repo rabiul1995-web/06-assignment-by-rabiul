@@ -3,78 +3,76 @@
 import { useState } from "react";
 
 type Workout = {
-          id: number;
-          name: string;
-          image: string;
-          muscleGroups: string[];
-          equipment: string;
-          difficulty: string;
-          duration: number;
-          caloriesBurned: number;
-          rating: number;
+  id: number;
+  name: string;
+  image: string;
+  muscleGroups: string[];
+  equipment: string;
+  difficulty: string;
+  duration: number;
+  caloriesBurned: number;
+  rating: number;
 };
 
 export default function WorkoutActions({
-          workout,
+  workout,
 }: {
-          workout: Workout;
+  workout: Workout;
 }) {
-          const [added, setAdded] = useState(false);
-          const [saved, setSaved] = useState(false);
+  const [added, setAdded] = useState(false);
+  const [saved, setSaved] = useState(false);
 
-          const handleAddToPlan = () => {
-                    const existingPlan = JSON.parse(
-                              localStorage.getItem("myPlan") || "[]"
-                    );
+  const handleAddToPlan = () => {
+    const existingPlan = JSON.parse(
+      localStorage.getItem("fitlog-plan") || "[]"
+    );
 
-                    const alreadyAdded = existingPlan.some(
-                              (item: Workout) => item.id === workout.id
-                    );
+    const alreadyAdded = existingPlan.includes(workout.id);
 
-                    if (!alreadyAdded) {
-                              localStorage.setItem(
-                                        "myPlan",
-                                        JSON.stringify([...existingPlan, workout])
-                              );
-                    }
+    if (!alreadyAdded) {
+      localStorage.setItem(
+        "fitlog-plan",
+        JSON.stringify([...existingPlan, workout.id])
+      );
+    }
 
-                    setAdded(true);
-          };
+    setAdded(true);
+  };
 
-          const handleSaveForLater = () => {
-                    const existingSaved = JSON.parse(
-                              localStorage.getItem("savedWorkouts") || "[]"
-                    );
+  const handleSaveForLater = () => {
+    const existingSaved = JSON.parse(
+      localStorage.getItem("savedWorkouts") || "[]"
+    );
 
-                    const alreadySaved = existingSaved.some(
-                              (item: Workout) => item.id === workout.id
-                    );
+    const alreadySaved = existingSaved.some(
+      (item: Workout) => item.id === workout.id
+    );
 
-                    if (!alreadySaved) {
-                              localStorage.setItem(
-                                        "savedWorkouts",
-                                        JSON.stringify([...existingSaved, workout])
-                              );
-                    }
+    if (!alreadySaved) {
+      localStorage.setItem(
+        "savedWorkouts",
+        JSON.stringify([...existingSaved, workout])
+      );
+    }
 
-                    setSaved(true);
-          };
+    setSaved(true);
+  };
 
-          return (
-                    <div className="mt-8 flex flex-wrap gap-4">
-                              <button
-                                        onClick={handleAddToPlan}
-                                        className="bg-lime-400 px-6 py-3 font-black uppercase text-black transition hover:bg-lime-300"
-                              >
-                                        {added ? "✓ Added to My Plan" : "Add to My Plan"}
-                              </button>
+  return (
+    <div className="mt-8 flex flex-wrap gap-4">
+      <button
+        onClick={handleAddToPlan}
+        className="bg-lime-400 px-6 py-3 font-black uppercase text-black transition hover:bg-lime-300"
+      >
+        {added ? "✓ Added to My Plan" : "Add to My Plan"}
+      </button>
 
-                              <button
-                                        onClick={handleSaveForLater}
-                                        className="border border-zinc-700 px-6 py-3 font-black uppercase text-white transition hover:border-lime-400 hover:text-lime-400"
-                              >
-                                        {saved ? "✓ Saved" : "Save for Later"}
-                              </button>
-                    </div>
-          );
+      <button
+        onClick={handleSaveForLater}
+        className="border border-zinc-700 px-6 py-3 font-black uppercase text-white transition hover:border-lime-400 hover:text-lime-400"
+      >
+        {saved ? "✓ Saved" : "Save for Later"}
+      </button>
+    </div>
+  );
 }
