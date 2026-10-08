@@ -7,26 +7,26 @@ export default function Navbar() {
   const [planCount, setPlanCount] = useState(0);
   const [savedCount, setSavedCount] = useState(0);
 
-useEffect(() => {
-  const updateCounts = () => {
-    const savedPlan = localStorage.getItem("fitlog-plan");
-    const savedWorkouts = localStorage.getItem("savedWorkouts");
+  useEffect(() => {
+    const updateCounts = () => {
+      const savedPlan = localStorage.getItem("fitlog-plan");
+      const savedWorkouts = localStorage.getItem("savedWorkouts");
 
-    const plan = savedPlan ? JSON.parse(savedPlan) : [];
-    const saved = savedWorkouts ? JSON.parse(savedWorkouts) : [];
+      const plan = savedPlan ? JSON.parse(savedPlan) : [];
+      const saved = savedWorkouts ? JSON.parse(savedWorkouts) : [];
 
-    setPlanCount(plan.length);
-    setSavedCount(saved.length);
-  };
+      setPlanCount(plan.length);
+      setSavedCount(saved.length);
+    };
 
-  updateCounts();
+    updateCounts();
 
-  const interval = setInterval(updateCounts, 500);
+    const interval = setInterval(updateCounts, 500);
 
-  return () => {
-    clearInterval(interval);
-  };
-}, []);
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 border-b border-zinc-800 bg-black">
@@ -44,7 +44,7 @@ useEffect(() => {
         <div className="hidden items-center gap-8 md:flex">
           <Link
             href="/"
-            className="font-semibold text-lime-400"
+            className="font-semibold text-lime-400 cursor-pointer"
           >
             Workout
           </Link>
