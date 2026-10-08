@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
+
 import Hero from "./components/Hero";
 import WorkoutCard from "./components/WorkoutCard";
 
@@ -38,8 +38,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-black text-white">
-      <Navbar />
-
+      
       <Hero />
 
       {/* Library */}
